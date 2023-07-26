@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { Post } from "../../models/models";
 import { useGetPostsQuery } from "../../store/rtk/backend.api";
 import style from "./table.module.css";
 
-interface TableProps {}
+interface TableProps {
+  data: Post[]
+  setCurrenPage: Function
+  currentPage: string
+  searchText: string
+}
 
-const Table: React.FC<TableProps> = ({}) => {
-  const [currentPage, setCurrenPage] = useState("1");
+const Table: React.FC<TableProps> = ({data, currentPage,setCurrenPage, searchText}) => {
   const [nextDisabled, setNextDisabled] = useState(false);
   const [prevDisabled, setPrevDisabled] = useState(false);
 
@@ -22,7 +27,7 @@ const Table: React.FC<TableProps> = ({}) => {
     } else setCurrenPage(String(Number(currentPage) - 0));
   };
 
-  const { data } = useGetPostsQuery(`${currentPage}`);
+  
 
   console.log(currentPage);
 
@@ -37,7 +42,9 @@ const Table: React.FC<TableProps> = ({}) => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((elem) => (
+          {data?.filter((elem) => {
+            return searchText.toLowerCase() === ''? elem : elem.body.toLowerCase().includes(searchText) || elem.title.toLowerCase().includes(searchText)
+          }).map((elem) => (
             <tr key={elem.id}>
               <td className={style.id}>{elem.id}</td>
               <td>{elem.title}</td>
