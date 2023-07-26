@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+}
+
+.search {
+    max-width: 631px;
+    padding: 10px;
+    background-color: rgba(90, 92, 102, 1);
+    display: flex;
+    gap: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+}
+
+.search_btn {
+    cursor: pointer;
+}
