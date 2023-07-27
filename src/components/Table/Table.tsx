@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Post } from "../../models/models";
+import { RootState } from "../../store";
 import { useGetPostsQuery } from "../../store/rtk/backend.api";
 import style from "./table.module.css";
 
@@ -7,12 +9,12 @@ interface TableProps {
   data: Post[]
   setCurrenPage: Function
   currentPage: string
-  searchText: string
 }
 
-const Table: React.FC<TableProps> = ({data, currentPage,setCurrenPage, searchText}) => {
+const Table: React.FC<TableProps> = ({data, currentPage,setCurrenPage,}) => {
   const [nextDisabled, setNextDisabled] = useState(false);
   const [prevDisabled, setPrevDisabled] = useState(false);
+  const searchText = useSelector((state: RootState) => state.search.searchText)
 
 
   const nextPage = () => {

@@ -4,19 +4,24 @@ import "./index.css";
 import "./fonts.css";
 import Search from "./components/Search/Search";
 import { useGetPostsQuery } from "./store/rtk/backend.api";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "./store";
 
 function App() {
   const [currentPage, setCurrenPage] = useState("1");
-  const [searchText, setSearchText] = useState('')
-  console.log(searchText, 'qwe')
+
+  const searchInfo = useSelector((state:RootState) => state.search.searchText)
+  
+
+  console.log(searchInfo)
 
   const { data } = useGetPostsQuery(`${currentPage}`);
 
+
   return (
     <div className="App">
-      <Search searchText={searchText} setSearchText={setSearchText} />
+      <Search />
       <Table
-        searchText={searchText}
         data={data!}
         currentPage={currentPage}
         setCurrenPage={setCurrenPage}
